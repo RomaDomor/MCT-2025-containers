@@ -41,7 +41,7 @@ services:
       DB_PORT: "5432"
       DB_NAME: app
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
     networks:
       - mct-network
