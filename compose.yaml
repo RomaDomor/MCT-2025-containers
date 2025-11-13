@@ -47,6 +47,7 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+    platform: linux/amd64
     ports:
       - "8080:8080"
     environment:

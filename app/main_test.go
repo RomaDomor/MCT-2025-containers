@@ -1,4 +1,4 @@
-package app
+package main
 
 import (
 	"context"
@@ -183,7 +183,11 @@ func TestHandleVisitsDevMode(t *testing.T) {
 	db = setupTestDB(t)
 	rdb = setupTestRedis(t)
 
-	os.Setenv("DEV_MODE", "true")
+	err := os.Setenv("ENV", "prod")
+	if err != nil {
+		t.Errorf("Failed to set ENV environment variable: %v", err)
+		return
+	}
 
 	req := httptest.NewRequest("GET", "/visits", nil)
 	w := httptest.NewRecorder()
