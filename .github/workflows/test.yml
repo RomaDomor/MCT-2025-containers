@@ -52,9 +52,7 @@ jobs:
             echo "Database initialization script not found"
             exit 1
           fi
-          if [ ! -x "init/init-db.sh" ]; then
-            chmod +x init/init-db.sh
-          fi
+          chmod +x init/init-db.sh
           echo "Database initialization script verified"
 
       - name: Run database initialization
@@ -77,7 +75,7 @@ jobs:
         env:
           PGPASSWORD: mctapppass
         run: |
-          psql -h localhost -U devops -d devops_db -c "\dt" || exit 1
+          psql -h localhost -U mct -d mct -c "\dt" || exit 1
           echo "Database tables verified"
 
       - name: Check Redis connectivity
@@ -94,6 +92,7 @@ jobs:
           DB_PORT: 5432
           DB_NAME: mct
           REDIS_ADDR: localhost:6379
+          ENV: prod
         run: |
           go test -v -coverprofile=coverage.out -covermode=atomic ./...
           coverage=$(go tool cover -func=coverage.out | grep total | awk '{print $3}' | sed 's/%//')
